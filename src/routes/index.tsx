@@ -1,7 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Cpu, Network } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Cpu, Network, Trophy } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ArcadeShell, Recruit } from "@/components/kni/ArcadeShell";
+import { loadMemoryScores, type MemoryEntry } from "@/games/memory-leak/leaderboard";
+import { formatMs } from "@/games/memory-leak/engine";
+import { loadScores, type Entry as PacketEntry } from "@/games/packet-router/leaderboard";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -18,13 +22,20 @@ export const Route = createFileRoute("/")({
 });
 
 const GAMES = [
-  { to: "/gry/memory-leak", name: "Memory", accent: "Leak", icon: Cpu, tagline: "Ile RAM-u masz w głowie?",
+  { to: "/gry/memory-leak", kind: "memory-leak" as const, name: "Memory", accent: "Leak", icon: Cpu, tagline: "Ile RAM-u masz w głowie?",
     desc: "Zapamiętaj podświetlone pola i odtwórz wzór. 60 sekund, 3 życia, 10 poziomów.", rank: "Ranking: poziom → błędy → czas" },
-  { to: "/gry/packet-router", name: "Packet", accent: "Router", icon: Network, tagline: "Sieciowy kurier",
+  { to: "/gry/packet-router", kind: "packet-router" as const, name: "Packet", accent: "Router", icon: Network, tagline: "Sieciowy kurier",
     desc: "Obracaj kafelki i dostarcz pakiet do celu. 2 minuty, +10 s za każdą zagadkę.", rank: "Ranking: punkty" },
 ] as const;
 
 function Home() {
+  const [memoryScores, setMemoryScores] = useState<MemoryEntry[]>([]);
+  const [packetScores, setPacketScores] = useState<PacketEntry[]>([]);
+  useEffect(() => {
+    setMemoryScores(loadMemoryScores());
+    setPacketScores(loadScores());
+  }, []);
+
   return (
     <ArcadeShell label="KNI_ARCADE" footerLabel="KNI ARCADE_ / WYBÓR GRY" back={false}>
       <div>
@@ -41,11 +52,65 @@ function Home() {
             </div>
             <p className="flex-1 text-muted-foreground">{g.desc}</p>
             <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">{g.rank}</p>
+            {g.kind === "memory-leak" ? <MemoryTop5 rows={memoryScores} /> : <PacketTop5 rows={packetScores} />}
             <Button asChild variant="arcade" size="hero"><Link to={g.to}>Zagraj</Link></Button>
           </article>
         ))}
       </div>
       <Recruit />
     </ArcadeShell>
+  );
+}
+
+function Top5Header() {
+  return (
+    <h3 className="flex items-center gap-2 font-mono text-xs font-semibold uppercase tracking-widest text-primary">
+      <Trophy className="h-3.5 w-3.5" aria-hidden /> Top 5
+    </h3>
+  );
+}
+
+function MemoryTop5({ rows }: { rows: MemoryEntry[] }) {
+  const top = rows.slice(0, 5);
+  return (
+    <section aria-label="Top 5 — Memory Leak" className="rounded-lg border bg-background/40 p-3">
+      <Top5Header />
+      {top.length === 0 ? (
+        <p className="mt-2 text-sm text-muted-foreground">Ranking pusty — zagraj jako pierwszy!</p>
+      ) : (
+        <ol className="mt-2 space-y-1 font-mono text-sm">
+          {top.map((r) => (
+            <li key={r.id} className="flex items-baseline gap-2">
+              <span className="w-5 shrink-0 text-right text-muted-foreground">{r.place}.</span>
+              <span className="min-w-0 flex-1 truncate font-sans">{r.nick}</span>
+              <span className="shrink-0 text-accent">poz. {r.level}</span>
+              <span className="shrink-0 text-muted-foreground">{r.errors} bł. · {formatMs(r.time_ms)}</span>
+            </li>
+          ))}
+        </ol>
+      )}
+    </section>
+  );
+}
+
+function PacketTop5({ rows }: { rows: PacketEntry[] }) {
+  const top = rows.slice(0, 5);
+  return (
+    <section aria-label="Top 5 — Packet Router" className="rounded-lg border bg-background/40 p-3">
+      <Top5Header />
+      {top.length === 0 ? (
+        <p className="mt-2 text-sm text-muted-foreground">Ranking pusty — zagraj jako pierwszy!</p>
+      ) : (
+        <ol className="mt-2 space-y-1 font-mono text-sm">
+          {top.map((r, i) => (
+            <li key={`${r.at}-${i}`} className="flex items-baseline gap-2">
+              <span className="w-5 shrink-0 text-right text-muted-foreground">{i + 1}.</span>
+              <span className="min-w-0 flex-1 truncate font-sans">{r.nick}</span>
+              <span className="shrink-0 text-accent">{r.score} pkt</span>
+            </li>
+          ))}
+        </ol>
+      )}
+    </section>
   );
 }
