@@ -30,7 +30,8 @@ const GAMES = [
 
 type RankedMemory = ReturnType<typeof loadMemoryScores>;
 
-
+function Home() {
+  const [memoryScores, setMemoryScores] = useState<RankedMemory>([]);
   const [packetScores, setPacketScores] = useState<PacketEntry[]>([]);
   useEffect(() => {
     setMemoryScores(loadMemoryScores());
