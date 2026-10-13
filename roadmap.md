@@ -1,4 +1,4 @@
-# KNI Arcade
+# KNI_Arcade
 - [x] Połączenie gier Memory Leak i Packet Router, strona wyboru, adresy /gry/*
 - [x] Osobne lokalne rankingi
 - [x] Oznaczenie „Ranking tego laptopa” + eksport wyników do JSON

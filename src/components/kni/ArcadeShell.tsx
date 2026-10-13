@@ -4,7 +4,7 @@ import { ArrowLeft, Maximize } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { KNI_CONFIG } from "@/config/kni";
 
-/** Wspólna rama KNI Arcade: pasek terminala, przycisk powrotu, stopka. */
+/** Wspólna rama KNI_Arcade: pasek terminala, przycisk powrotu, stopka. */
 export function ArcadeShell({ label, footerLabel, back = true, footerExtra, children }: {
   label: string; footerLabel: string; back?: boolean; footerExtra?: ReactNode; children: ReactNode;
 }) {
