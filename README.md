@@ -52,6 +52,14 @@ npm run start:local
 Następnie otwórz **http://localhost:8080** (najlepiej w trybie pełnoekranowym — przycisk „Pełny ekran”).
 Zatrzymanie serwera: `Ctrl+C`. Port 8080 musi być wolny.
 
+### Port 8080 jest zajęty
+
+Jeśli `npm run start:local` wypisze „Port 8080 jest zajęty”, aplikacja nie wystartuje (adres jest stały, bo ranking jest przypisany do `localhost:8080`). Zwykle to wcześniej uruchomione okno z serwerem — zamknij je (`Ctrl+C`) i uruchom polecenie ponownie. Jeśli to nie ono, znajdź i zakończ proces:
+
+- **Windows (PowerShell):** `netstat -ano | findstr :8080`, potem `taskkill /PID <numer> /F`
+- **macOS (Terminal):** `lsof -i :8080`, potem `kill <PID>`
+
+
 Na stoisku wystarczy po restarcie laptopa ponownie wykonać `npm run start:local` (bez ponownego budowania).
 
 ## Pozostałe polecenia
