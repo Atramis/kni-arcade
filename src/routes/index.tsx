@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { Cpu, Network, Trophy } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ArcadeShell, Recruit } from "@/components/kni/ArcadeShell";
+import { AdminMenu } from "@/components/kni/AdminMenu";
+import { SCORES_CHANGED_EVENT } from "@/lib/admin-auth";
 import { loadMemoryScores } from "@/games/memory-leak/leaderboard";
 import { formatMs } from "@/games/memory-leak/engine";
 import { loadScores, type Entry as PacketEntry } from "@/games/packet-router/leaderboard";
@@ -33,13 +35,23 @@ type RankedMemory = ReturnType<typeof loadMemoryScores>;
 function Home() {
   const [memoryScores, setMemoryScores] = useState<RankedMemory>([]);
   const [packetScores, setPacketScores] = useState<PacketEntry[]>([]);
-  useEffect(() => {
+  const reload = () => {
     setMemoryScores(loadMemoryScores());
     setPacketScores(loadScores());
+  };
+  useEffect(() => {
+    reload();
+    // Inne karty (storage) i ta karta (reset z panelu administratora).
+    window.addEventListener("storage", reload);
+    window.addEventListener(SCORES_CHANGED_EVENT, reload);
+    return () => {
+      window.removeEventListener("storage", reload);
+      window.removeEventListener(SCORES_CHANGED_EVENT, reload);
+    };
   }, []);
 
   return (
-    <ArcadeShell label="KNI_ARCADE" footerLabel="KNI ARCADE_ / WYBÓR GRY" back={false}>
+    <ArcadeShell label="KNI_ARCADE" footerLabel="KNI ARCADE_ / WYBÓR GRY" back={false} footerExtra={<AdminMenu onChanged={reload} />}>
       <div>
         <h1 className="game-title font-display font-bold leading-none">KNI<span className="text-primary">_</span>Arcade</h1>
         <p className="mt-3 text-xl text-accent sm:text-2xl">Wybierz grę i pobij rekord stoiska</p>

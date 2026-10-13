@@ -5,8 +5,8 @@ import { Button } from "@/components/ui/button";
 import { KNI_CONFIG } from "@/config/kni";
 
 /** Wspólna rama KNI Arcade: pasek terminala, przycisk powrotu, stopka. */
-export function ArcadeShell({ label, footerLabel, back = true, children }: {
-  label: string; footerLabel: string; back?: boolean; children: ReactNode;
+export function ArcadeShell({ label, footerLabel, back = true, footerExtra, children }: {
+  label: string; footerLabel: string; back?: boolean; footerExtra?: ReactNode; children: ReactNode;
 }) {
   const [fsOk, setFsOk] = useState(false);
   useEffect(() => setFsOk(!!document.fullscreenEnabled), []);
@@ -43,6 +43,7 @@ export function ArcadeShell({ label, footerLabel, back = true, children }: {
       {children}
       <footer className="flex flex-wrap items-center justify-between gap-4 rounded-2xl border bg-card/40 px-6 py-5 font-mono text-xs uppercase tracking-[0.25em] text-muted-foreground">
         <span>KNI // {KNI_CONFIG.organizationName.toUpperCase()}</span>
+        {footerExtra}
         <span>{footerLabel}</span>
       </footer>
     </main>

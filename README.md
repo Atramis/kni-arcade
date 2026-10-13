@@ -62,6 +62,17 @@ Jeśli `npm run start:local` wypisze „Port 8080 jest zajęty”, aplikacja nie
 
 Na stoisku wystarczy po restarcie laptopa ponownie wykonać `npm run start:local` (bez ponownego budowania).
 
+## Menu administratora (reset rankingów)
+
+W stopce ekranu wyboru gier jest przycisk **„Administrator”** z kłódką.
+
+- Przy pierwszym otwarciu ustaw hasło (min. 8 znaków, dwa razy). Zrób to **przed** udostępnieniem laptopa odwiedzającym. Domyślnego hasła nie ma.
+- Po odblokowaniu widać liczbę wyników każdej gry i przyciski resetu (jednej gry lub obu) oraz zmiany hasła. Przed usunięciem można zrobić eksport JSON.
+- Zamknięcie okna, odświeżenie strony lub przejście do gry ponownie blokuje panel.
+- Reset usuwa tylko wybrany ranking; hasło i druga gra zostają.
+
+**Uwaga:** to tylko lokalna blokada na stoisko. Hasło jest zapisane w przeglądarce jako weryfikator PBKDF2 (nie jawnym tekstem), ale osoba z dostępem do narzędzi deweloperskich przeglądarki może zmienić lub usunąć dane w localStorage. To nie jest pełne zabezpieczenie danych przed właścicielem urządzenia. Jeśli zapomnisz hasła: w narzędziach deweloperskich usuń klucz `kni-arcade:admin:verifier`.
+
 ## Pozostałe polecenia
 
 - `npm run dev` — tryb deweloperski
