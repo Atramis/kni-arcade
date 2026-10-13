@@ -10,33 +10,53 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as GryMemoryLeakRouteImport } from './routes/gry/memory-leak'
+import { Route as GryPacketRouterRouteImport } from './routes/gry/packet-router'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GryMemoryLeakRoute = GryMemoryLeakRouteImport.update({
+  id: '/gry/memory-leak',
+  path: '/gry/memory-leak',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GryPacketRouterRoute = GryPacketRouterRouteImport.update({
+  id: '/gry/packet-router',
+  path: '/gry/packet-router',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/gry/memory-leak': typeof GryMemoryLeakRoute
+  '/gry/packet-router': typeof GryPacketRouterRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/gry/memory-leak': typeof GryMemoryLeakRoute
+  '/gry/packet-router': typeof GryPacketRouterRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/gry/memory-leak': typeof GryMemoryLeakRoute
+  '/gry/packet-router': typeof GryPacketRouterRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/gry/memory-leak' | '/gry/packet-router'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/gry/memory-leak' | '/gry/packet-router'
+  id: '__root__' | '/' | '/gry/memory-leak' | '/gry/packet-router'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  GryMemoryLeakRoute: typeof GryMemoryLeakRoute
+  GryPacketRouterRoute: typeof GryPacketRouterRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +68,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/gry/memory-leak': {
+      id: '/gry/memory-leak'
+      path: '/gry/memory-leak'
+      fullPath: '/gry/memory-leak'
+      preLoaderRoute: typeof GryMemoryLeakRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gry/packet-router': {
+      id: '/gry/packet-router'
+      path: '/gry/packet-router'
+      fullPath: '/gry/packet-router'
+      preLoaderRoute: typeof GryPacketRouterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  GryMemoryLeakRoute: GryMemoryLeakRoute,
+  GryPacketRouterRoute: GryPacketRouterRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
