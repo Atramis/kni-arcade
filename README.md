@@ -31,6 +31,9 @@ Wyniki są przypisane do adresu `http://localhost:8080` — uruchamiaj grę zaws
 - Node.js **20.19+** (zalecane 22 LTS) z npm — https://nodejs.org
 - Internet potrzebny tylko raz: do `npm install`. Budowanie i gra działają offline.
 - Zmienne środowiskowe: **żadne nie są wymagane**.
+- Plik `.npmrc` (w repozytorium) jest wymagany — bez niego `npm install` kończy się błędem
+  `Cannot read properties of null (reading 'edgesOut')`. Jeśli pobierasz projekt jako ZIP, upewnij się, że ten ukryty plik też jest skopiowany.
+  Gdy wciąż występuje błąd: `npm install --legacy-peer-deps`.
 
 ## Instalacja i uruchomienie
 
