@@ -176,7 +176,7 @@ export function AdminMenu({ onChanged }: { onChanged: () => void }) {
       </Dialog>
 
       <AlertDialog open={!!confirm} onOpenChange={(o) => !o && setConfirm(null)}>
-        <AlertDialogContent>
+        <AlertDialogContent className="z-[60] border bg-card shadow-2xl">
           <AlertDialogHeader>
             <AlertDialogTitle>Reset: {confirm?.map((g) => NAMES[g]).join(" i ")}</AlertDialogTitle>
             <AlertDialogDescription>
