@@ -12,9 +12,9 @@ import { loadScores, type Entry as PacketEntry } from "@/games/packet-router/lea
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "KNI Arcade — gry Koła Naukowego Informatyki" },
+      { title: "KNI_Arcade — gry Koła Naukowego Informatyki" },
       { name: "description", content: "Wybierz grę na stoisku KNI: Memory Leak lub Packet Router. Zagraj i walcz o miejsce w rankingu." },
-      { property: "og:title", content: "KNI Arcade" },
+      { property: "og:title", content: "KNI_Arcade" },
       { property: "og:description", content: "Dwie gry Koła Naukowego Informatyki: Memory Leak i Packet Router." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

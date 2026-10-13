@@ -26,7 +26,7 @@ export const newId = () =>
 
 /** Kopia zapasowa: pobiera wyniki danej gry jako plik JSON. */
 export function exportScores(key: string, game: string) {
-  const payload = { app: "KNI Arcade", game, exportedAt: new Date().toISOString(), scores: readList(key) };
+  const payload = { app: "KNI_Arcade", game, exportedAt: new Date().toISOString(), scores: readList(key) };
   const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");

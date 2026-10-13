@@ -9,7 +9,7 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* KNI Arcade design system — wspólna oprawa obu gier. Fonty ładowane lokalnie (tryb offline). */
+/* KNI_Arcade design system — wspólna oprawa obu gier. Fonty ładowane lokalnie (tryb offline). */
 
 @theme inline {
   --font-sans: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;

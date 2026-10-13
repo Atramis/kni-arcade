@@ -1,4 +1,6 @@
-# KNI Arcade
+# KNI_Arcade
+
+Repozytorium GitHub: `kni-dni-otwarte-arcade`.
 
 Dwie gry Koła Naukowego Informatyki w jednej aplikacji:
 
@@ -14,7 +16,8 @@ Stos: TanStack Start (React 19, Vite 7, Tailwind CSS 4), serwer Nitro w wersji N
 - Cała rozgrywka działa bez internetu i bez Lovable Cloud — brak backendu i bazy danych.
 - Wyniki zapisują się w `localStorage` przeglądarki, osobno dla każdej gry
   (`kni-arcade:memory-leak:scores`, `kni-arcade:packet-router:scores`).
-  Zostają po odświeżeniu oraz zamknięciu i ponownym otwarciu przeglądarki
+  Klucze zachowują prefiks `kni-arcade:`, żeby istniejące wyniki i hasło
+  administratora przetrwały zmianę nazwy projektu. Zostają po odświeżeniu oraz zamknięciu i ponownym otwarciu przeglądarki
   (o ile nie używasz trybu prywatnego i nie czyścisz danych witryn).
 - Rankingi są oznaczone jako „Ranking tego laptopa”.
 - Przycisk **Eksport JSON** przy rankingu pobiera kopię zapasową wyników.
@@ -34,7 +37,7 @@ Wyniki są przypisane do adresu `http://localhost:8080` — uruchamiaj grę zaws
 ### Windows (PowerShell lub Wiersz polecenia)
 
 ```powershell
-cd ścieżka\do\kni-arcade
+cd ścieżka\do\kni-dni-otwarte-arcade
 npm install
 npm run build
 npm run start:local
@@ -43,7 +46,7 @@ npm run start:local
 ### macOS (Terminal)
 
 ```bash
-cd ~/sciezka/do/kni-arcade
+cd ~/sciezka/do/kni-dni-otwarte-arcade
 npm install
 npm run build
 npm run start:local

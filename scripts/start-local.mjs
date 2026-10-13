@@ -1,4 +1,4 @@
-// Uruchamia zbudowaną aplikację KNI Arcade pod stałym adresem http://localhost:8080 (bez internetu).
+// Uruchamia zbudowaną aplikację KNI_Arcade pod stałym adresem http://localhost:8080 (bez internetu).
 import { existsSync } from "node:fs";
 import { createServer } from "node:net";
 import { fileURLToPath, pathToFileURL } from "node:url";
@@ -17,7 +17,7 @@ await new Promise((resolve) => {
   const probe = createServer();
   probe.once("error", (err) => {
     if (err.code === "EADDRINUSE" || err.code === "EACCES") {
-      console.error(`Port ${PORT} jest zajęty — KNI Arcade musi działać pod http://localhost:${PORT}.`);
+      console.error(`Port ${PORT} jest zajęty — KNI_Arcade musi działać pod http://localhost:${PORT}.`);
       console.error("Zamknij program, który go używa (np. poprzednie okno z npm run start:local), i spróbuj ponownie.");
       console.error("Jak znaleźć ten program: zobacz README, sekcja „Port 8080 jest zajęty”.");
       process.exit(1);
@@ -32,5 +32,5 @@ process.env.PORT = String(PORT);
 process.env.HOST = "localhost";
 process.env.NITRO_PORT = String(PORT);
 process.env.NITRO_HOST = "localhost";
-console.log(`KNI Arcade: http://localhost:${PORT}  (Ctrl+C, aby zatrzymać)`);
+console.log(`KNI_Arcade: http://localhost:${PORT}  (Ctrl+C, aby zatrzymać)`);
 await import(pathToFileURL(entry).href);
