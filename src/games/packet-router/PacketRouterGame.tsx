@@ -5,6 +5,8 @@ import {
   findRoute, generatePuzzle, rotate, scoreFail, scoreSuccess, validateNick, type Puzzle,
 } from "./engine";
 import { loadScores, saveScore, type Entry } from "./leaderboard";
+import { LocalRankingTag } from "@/components/kni/LocalRankingTag";
+import { STORAGE_KEYS } from "@/lib/local-scores";
 import { Button } from "@/components/ui/button";
 import { ArcadeShell, Recruit } from "@/components/kni/ArcadeShell";
 
@@ -52,10 +54,10 @@ function StartScreen({ scores, onPlay }: { scores: Entry[]; onPlay: () => void }
 function Leaderboard({ scores, highlight }: { scores: Entry[]; highlight?: number | undefined }) {
   return (
     <section aria-labelledby="lb-pr" className="rounded-lg border bg-card/80 p-4">
+      <LocalRankingTag storageKey={STORAGE_KEYS.packetRouter} game="packet-router" />
       <div className="mb-3 flex items-center justify-between gap-2">
         <h2 id="lb-pr" className="flex items-center gap-2 font-mono text-sm font-semibold uppercase tracking-widest text-primary"><Trophy className="h-4 w-4" aria-hidden /> Top 10</h2>
-        <span className="text-xs text-muted-foreground">lokalny — to urządzenie</span>
-      </div>
+              </div>
       {scores.length === 0 ? (
         <p className="text-sm text-muted-foreground">Brak wyników. Bądź pierwszy!</p>
       ) : (

@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { Heart, HeartCrack, Cpu, Timer, Eye, MousePointerClick, Trophy } from "lucide-react";
+import { LocalRankingTag } from "@/components/kni/LocalRankingTag";
+import { STORAGE_KEYS } from "@/lib/local-scores";
 import { Button } from "@/components/ui/button";
 import { ArcadeShell, Recruit } from "@/components/kni/ArcadeShell";
 import { Board } from "./Board";
@@ -58,12 +60,12 @@ function Leaderboard({ scores, highlightId, own, compact }: {
   const ownInTop = own && highlightId && rows.some((r) => r.id === highlightId);
   return (
     <section aria-labelledby="lb-ml" className="rounded-lg border bg-card/80 p-4">
+      <LocalRankingTag storageKey={STORAGE_KEYS.memoryLeak} game="memory-leak" />
       <div className="mb-3 flex items-center justify-between gap-2">
         <h2 id="lb-ml" className="flex items-center gap-2 font-mono text-sm font-semibold uppercase tracking-widest text-primary">
           <Trophy className="h-4 w-4" aria-hidden /> Top 10
         </h2>
-        <span className="text-xs text-muted-foreground">lokalny — to urządzenie</span>
-      </div>
+              </div>
       {rows.length === 0 ? (
         <p className="text-sm text-muted-foreground">Ranking jest pusty — bądź pierwszy!</p>
       ) : (

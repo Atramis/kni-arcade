@@ -23,3 +23,17 @@ export const newId = () =>
   typeof crypto !== "undefined" && "randomUUID" in crypto
     ? crypto.randomUUID()
     : `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+
+/** Kopia zapasowa: pobiera wyniki danej gry jako plik JSON. */
+export function exportScores(key: string, game: string) {
+  const payload = { app: "KNI Arcade", game, exportedAt: new Date().toISOString(), scores: readList(key) };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `kni-arcade-${game}-${new Date().toISOString().slice(0, 10)}.json`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
