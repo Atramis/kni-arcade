@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Cpu, Network, Trophy } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ArcadeShell, Recruit } from "@/components/kni/ArcadeShell";
-import { loadMemoryScores, type MemoryEntry } from "@/games/memory-leak/leaderboard";
+import { loadMemoryScores } from "@/games/memory-leak/leaderboard";
 import { formatMs } from "@/games/memory-leak/engine";
 import { loadScores, type Entry as PacketEntry } from "@/games/packet-router/leaderboard";
 
@@ -72,7 +72,7 @@ function Top5Header() {
   );
 }
 
-function MemoryTop5({ rows }: { rows: MemoryEntry[] }) {
+function MemoryTop5({ rows }: { rows: RankedMemory }) {
   const top = rows.slice(0, 5);
   return (
     <section aria-label="Top 5 — Memory Leak" className="rounded-lg border bg-background/40 p-3">
