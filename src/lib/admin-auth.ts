@@ -55,7 +55,7 @@ export async function verifyPassword(pw: string): Promise<boolean> {
   const want = fromB64(v.hash);
   if (got.length !== want.length) return false;
   let diff = 0;
-  for (let i = 0; i < got.length; i++) diff |= got[i] ^ want[i];
+  for (let i = 0; i < got.length; i++) diff |= (got[i] ?? 0) ^ (want[i] ?? 0);
   return diff === 0;
 }
 
