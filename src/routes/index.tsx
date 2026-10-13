@@ -28,8 +28,10 @@ const GAMES = [
     desc: "Obracaj kafelki i dostarcz pakiet do celu. 2 minuty, +10 s za każdą zagadkę.", rank: "Ranking: punkty" },
 ] as const;
 
+type RankedMemory = ReturnType<typeof loadMemoryScores>;
+
 function Home() {
-  const [memoryScores, setMemoryScores] = useState<MemoryEntry[]>([]);
+  const [memoryScores, setMemoryScores] = useState<RankedMemory>([]);
   const [packetScores, setPacketScores] = useState<PacketEntry[]>([]);
   useEffect(() => {
     setMemoryScores(loadMemoryScores());
