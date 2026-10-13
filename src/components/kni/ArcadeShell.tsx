@@ -53,7 +53,7 @@ export function Recruit() {
   return (
     <aside className="rounded-lg border border-accent/40 bg-card/70 p-4">
       <p className="font-semibold text-accent">Chcesz tworzyć takie gry?</p>
-      <p className="text-sm text-muted-foreground">Dołącz do {KNI_CONFIG.organizationName}.</p>
+      <p className="text-sm text-muted-foreground">Dołącz do Koła Naukowego Informatyki.</p>
     </aside>
   );
 }
