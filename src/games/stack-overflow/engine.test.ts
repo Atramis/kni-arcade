@@ -1,5 +1,5 @@
-import { describe, expect, it } from "vitest";
-import { BOARD_HEIGHT, BOARD_WIDTH, PIECE_KINDS, getGhostCells, getPieceCells, type Cell } from "tetris-toolkit";
+import { describe, expect, it, vi } from "vitest";
+import { BOARD_HEIGHT, BOARD_WIDTH, PIECE_KINDS, getGhostCells, getPieceCells, type Cell, type Engine } from "tetris-toolkit";
 import { COUNTDOWN_MS, HEIGHT, ROUND_MS, StackGame, WIDTH, fallInterval, pointsForRows } from "./engine";
 
 describe("Stack_Overflow booth rules", () => {
@@ -18,8 +18,12 @@ describe("Stack_Overflow booth rules", () => {
   it("ends after exactly 120 seconds excluding countdown", () => {
     expect(ROUND_MS).toBe(120000);
     const game = new StackGame(); game.start(42); game.tick(COUNTDOWN_MS);
+    // Isolate the wall clock from natural idle-play overflow, tested separately below.
+    const core = (game as unknown as { core: Engine }).core;
+    const tick = vi.spyOn(core, "tick").mockImplementation(() => {});
     game.tick(119999); expect(game.snapshot().phase).toBe("playing");
     game.tick(1); expect(game.snapshot()).toMatchObject({ phase: "finished", reason: "time", remainingMs: 0 });
+    expect(tick.mock.calls.reduce((sum, [ms]) => sum + ms, 0)).toBe(120000);
     game.destroy();
   });
   it("does not award movement, rotation or drop points", () => {
