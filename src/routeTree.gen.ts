@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as GryMemoryLeakRouteImport } from './routes/gry/memory-leak'
 import { Route as GryPacketRouterRouteImport } from './routes/gry/packet-router'
+import { Route as GryStackOverflowRouteImport } from './routes/gry/stack-overflow'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -28,35 +29,50 @@ const GryPacketRouterRoute = GryPacketRouterRouteImport.update({
   path: '/gry/packet-router',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GryStackOverflowRoute = GryStackOverflowRouteImport.update({
+  id: '/gry/stack-overflow',
+  path: '/gry/stack-overflow',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/gry/memory-leak': typeof GryMemoryLeakRoute
   '/gry/packet-router': typeof GryPacketRouterRoute
+  '/gry/stack-overflow': typeof GryStackOverflowRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/gry/memory-leak': typeof GryMemoryLeakRoute
   '/gry/packet-router': typeof GryPacketRouterRoute
+  '/gry/stack-overflow': typeof GryStackOverflowRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/gry/memory-leak': typeof GryMemoryLeakRoute
   '/gry/packet-router': typeof GryPacketRouterRoute
+  '/gry/stack-overflow': typeof GryStackOverflowRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/gry/memory-leak' | '/gry/packet-router'
+  fullPaths:
+    '/' | '/gry/memory-leak' | '/gry/packet-router' | '/gry/stack-overflow'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/gry/memory-leak' | '/gry/packet-router'
-  id: '__root__' | '/' | '/gry/memory-leak' | '/gry/packet-router'
+  to: '/' | '/gry/memory-leak' | '/gry/packet-router' | '/gry/stack-overflow'
+  id:
+    | '__root__'
+    | '/'
+    | '/gry/memory-leak'
+    | '/gry/packet-router'
+    | '/gry/stack-overflow'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   GryMemoryLeakRoute: typeof GryMemoryLeakRoute
   GryPacketRouterRoute: typeof GryPacketRouterRoute
+  GryStackOverflowRoute: typeof GryStackOverflowRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -82,6 +98,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GryPacketRouterRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/gry/stack-overflow': {
+      id: '/gry/stack-overflow'
+      path: '/gry/stack-overflow'
+      fullPath: '/gry/stack-overflow'
+      preLoaderRoute: typeof GryStackOverflowRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -89,6 +112,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   GryMemoryLeakRoute: GryMemoryLeakRoute,
   GryPacketRouterRoute: GryPacketRouterRoute,
+  GryStackOverflowRoute: GryStackOverflowRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
