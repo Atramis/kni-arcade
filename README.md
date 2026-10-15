@@ -87,7 +87,7 @@ Plansza 10×20, siedem kształtów, podgląd następnego bloku i miejsca lądowa
 
 ### Bug_Hunt
 
-Siatka 4×4, trzysekundowe odliczanie i 60 sekund polowania. Kliknięcie lub dotknięcie błędu (owad z wykrzyknikiem) daje 100 punktów, a zdrowego symbolu `</>` odejmuje 50, nie poniżej zera. Pominięty błąd nie odejmuje punktów, ale przerywa serię. Co 15 sekund symbole znikają szybciej: po 1400/1200/1000/800 ms; maksymalnie trzy błędy naraz. Wynik zawiera trafienia, pominięcia, pomyłki i najlepszą serię. Ukrycie karty przerywa próbę bez możliwości zapisu; wyjście usuwa zegar i nasłuchiwanie. Osobny ranking przechowuje 200 wyników, pokazuje Top 10 w grze i Top 5 na ekranie wyboru. Dostępne eksport JSON i reset administratora.
+Siatka 4×4, trzysekundowe odliczanie i 60 sekund polowania. Kliknięcie lub dotknięcie błędu (owad z wykrzyknikiem) daje 100 punktów, a zdrowego symbolu `</>` odejmuje 50, nie poniżej zera. Pominięty błąd nie odejmuje punktów, ale przerywa serię. Co 15 sekund symbole znikają szybciej: po 1400/1300/1100/800 ms; maksymalnie trzy błędy naraz. Wynik zawiera trafienia, pominięcia, pomyłki i najlepszą serię. Ukrycie karty przerywa próbę bez możliwości zapisu; wyjście usuwa zegar i nasłuchiwanie. Osobny ranking przechowuje 200 wyników, pokazuje Top 10 w grze i Top 5 na ekranie wyboru. Dostępne eksport JSON i reset administratora.
 
 ## Pozostałe polecenia
 

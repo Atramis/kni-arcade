@@ -40,7 +40,7 @@ describe("Bug_Hunt rules", () => {
   it.each([[0, 0], [14999, 0], [15000, 1], [30000, 2], [45000, 3]])("uses stage %i → %i", (elapsed, stage) => {
     expect(stageAt(elapsed)).toBe(stage);
   });
-  it("uses lifetimes 1400, 1200, 1000 and 800 ms at successive stages", () => {
+  it("uses lifetimes 1400, 1300, 1100 and 800 ms at successive stages", () => {
     const game = playing(); const seen = new Map<number, number>(); const durations = new Set<number>();
     for (let now = 3000; now <= 63000; now += 10) {
       game.tick(now);
@@ -49,7 +49,7 @@ describe("Bug_Hunt rules", () => {
         expect(target.expiresAt).toBeLessThanOrEqual(63000);
       }
     }
-    expect([...durations].sort((a, b) => a - b)).toEqual([800, 1000, 1200, 1400]);
+    expect([...durations].sort((a, b) => a - b)).toEqual([800, 1100, 1300, 1400]);
   });
   it("has at most three bugs, unique cells and no out-of-grid targets", () => {
     const game = playing(); let max = 0;
