@@ -18,7 +18,7 @@ export function StackBoard({ state, active }: { state: GameState; active: boolea
   );
 }
 
-export function NextPiece({ kind }: { kind?: PieceKind }) {
+export function NextPiece({ kind }: { kind: PieceKind | undefined }) {
   const preview = kind ? getPiecePreview(kind) : null;
   const filled = new Set(preview?.cells.map(([x, y]) => `${x - preview.minX},${y - preview.minY}`));
   return <div role="img" aria-label={kind ? `Następny blok: ${kind}` : "Następny blok"} className="stack-preview">

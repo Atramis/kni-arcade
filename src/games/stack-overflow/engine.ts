@@ -34,7 +34,7 @@ export class StackGame {
   start(seed = Date.now(), presetBoard?: Playfield) {
     this.lines = 0; this.score = 0; this.elapsed = 0;
     this.countdown = COUNTDOWN_MS; this.reason = null; this.phase = "countdown";
-    this.core.startGame({ mode: "marathon", seed, presetBoard });
+    this.core.startGame({ mode: "marathon", seed, ...(presetBoard ? { presetBoard } : {}) });
   }
 
   tick(deltaMs: number) {
