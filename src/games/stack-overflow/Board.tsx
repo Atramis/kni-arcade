@@ -11,7 +11,7 @@ export function StackBoard({ state, active }: { state: GameState; active: boolea
         const y = index + VISIBLE_TOP;
         const falling = cells.has(`${x},${y}`);
         const kind = falling ? piece?.kind : locked;
-        return <span key={`${x},${y}`} data-cell={`${x},${index}`} data-kind={kind ?? "empty"}
+        return <span key={`${x},${y}`} data-cell={`${x},${index}`} data-kind={kind ?? "empty"} data-falling={falling}
           className={`stack-cell ${kind ? `stack-piece stack-${kind}` : ghost.has(`${x},${y}`) ? "stack-ghost" : ""} ${clearRows.includes(y) ? "stack-clearing" : ""}`} />;
       }))}
     </div>
