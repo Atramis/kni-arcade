@@ -14,8 +14,8 @@ import {
 } from "@/lib/admin-auth";
 
 type View = "setup" | "login" | "panel" | "change";
-const NAMES: Record<GameKey, string> = { memoryLeak: "Memory Leak", packetRouter: "Packet Router", stackOverflow: "Stack_Overflow" };
-const SLUGS: Record<GameKey, string> = { memoryLeak: "memory-leak", packetRouter: "packet-router", stackOverflow: "stack-overflow" };
+const NAMES: Record<GameKey, string> = { memoryLeak: "Memory Leak", packetRouter: "Packet Router", stackOverflow: "Stack_Overflow", bugHunt: "Bug_Hunt" };
+const SLUGS: Record<GameKey, string> = { memoryLeak: "memory-leak", packetRouter: "packet-router", stackOverflow: "stack-overflow", bugHunt: "bug-hunt" };
 
 export function AdminMenu({ onChanged }: { onChanged: () => void }) {
   const [open, setOpen] = useState(false);
@@ -23,7 +23,7 @@ export function AdminMenu({ onChanged }: { onChanged: () => void }) {
   const [error, setError] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
-  const [counts, setCounts] = useState<Record<GameKey, number>>({ memoryLeak: 0, packetRouter: 0, stackOverflow: 0 });
+  const [counts, setCounts] = useState<Record<GameKey, number>>({ memoryLeak: 0, packetRouter: 0, stackOverflow: 0, bugHunt: 0 });
   const [confirm, setConfirm] = useState<GameKey[] | null>(null);
 
   const refreshCounts = () =>
@@ -31,6 +31,7 @@ export function AdminMenu({ onChanged }: { onChanged: () => void }) {
       memoryLeak: readList(STORAGE_KEYS.memoryLeak).length,
       packetRouter: readList(STORAGE_KEYS.packetRouter).length,
       stackOverflow: readList(STORAGE_KEYS.stackOverflow).length,
+      bugHunt: readList(STORAGE_KEYS.bugHunt).length,
     });
 
   useEffect(() => {
@@ -115,7 +116,7 @@ export function AdminMenu({ onChanged }: { onChanged: () => void }) {
       </button>
 
       <Dialog open={open} onOpenChange={(o) => (o ? setOpen(true) : close())}>
-        <DialogContent>
+        <DialogContent className="max-h-[90dvh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Menu administratora</DialogTitle>
             <DialogDescription>
@@ -157,7 +158,8 @@ export function AdminMenu({ onChanged }: { onChanged: () => void }) {
               <Button variant="outline" onClick={() => setConfirm(["memoryLeak"])} disabled={busy}>Resetuj ranking Memory Leak</Button>
               <Button variant="outline" onClick={() => setConfirm(["packetRouter"])} disabled={busy}>Resetuj ranking Packet Router</Button>
               <Button variant="outline" onClick={() => setConfirm(["stackOverflow"])} disabled={busy}>Resetuj ranking Stack_Overflow</Button>
-              <Button variant="outline" onClick={() => setConfirm(["memoryLeak", "packetRouter", "stackOverflow"])} disabled={busy}>Resetuj wszystkie rankingi</Button>
+              <Button variant="outline" onClick={() => setConfirm(["bugHunt"])} disabled={busy}>Resetuj ranking Bug_Hunt</Button>
+              <Button variant="outline" onClick={() => setConfirm(["memoryLeak", "packetRouter", "stackOverflow", "bugHunt"])} disabled={busy}>Resetuj wszystkie rankingi</Button>
               <Button variant="ghost" onClick={() => { setView("change"); setNotice(null); setError(null); }}>Zmień hasło</Button>
               <Button variant="arcade" onClick={close}><Lock /> Zablokuj i zamknij</Button>
             </div>
@@ -178,7 +180,7 @@ export function AdminMenu({ onChanged }: { onChanged: () => void }) {
       </Dialog>
 
       <AlertDialog open={!!confirm} onOpenChange={(o) => !o && setConfirm(null)}>
-        <AlertDialogContent className="z-[60] border bg-card shadow-2xl">
+        <AlertDialogContent className="z-[60] max-h-[90dvh] overflow-y-auto border bg-card shadow-2xl">
           <AlertDialogHeader>
             <AlertDialogTitle>Reset: {confirm?.map((g) => NAMES[g]).join(" i ")}</AlertDialogTitle>
             <AlertDialogDescription>
