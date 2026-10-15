@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Cpu, Network, Trophy, Layers } from "lucide-react";
+import { Cpu, Network, Trophy, Layers, Bug } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ArcadeShell, Recruit } from "@/components/kni/ArcadeShell";
 import { AdminMenu } from "@/components/kni/AdminMenu";
@@ -9,14 +9,15 @@ import { loadMemoryScores } from "@/games/memory-leak/leaderboard";
 import { formatMs } from "@/games/memory-leak/engine";
 import { loadScores, type Entry as PacketEntry } from "@/games/packet-router/leaderboard";
 import { loadStackScores, type StackEntry } from "@/games/stack-overflow/leaderboard";
+import { loadBugScores, type BugEntry } from "@/games/bug-hunt/leaderboard";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "KNI_Arcade — gry Koła Naukowego Informatyki" },
-      { name: "description", content: "Wybierz grę na stoisku KNI: Memory Leak, Packet Router lub Stack_Overflow. Zagraj i walcz o miejsce w rankingu." },
+      { name: "description", content: "Cztery gry na stoisku KNI: Memory Leak, Packet Router, Stack_Overflow i Bug_Hunt. Zagraj i walcz o miejsce w rankingu." },
       { property: "og:title", content: "KNI_Arcade" },
-      { property: "og:description", content: "Trzy gry Koła Naukowego Informatyki: Memory Leak, Packet Router i Stack_Overflow." },
+      { property: "og:description", content: "Cztery gry Koła Naukowego Informatyki: Memory Leak, Packet Router, Stack_Overflow i Bug_Hunt." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -31,6 +32,8 @@ const GAMES = [
     desc: "Obracaj kafelki i dostarcz pakiet do celu. 2 minuty, +10 s za każdą zagadkę.", rank: "Ranking: punkty" },
   { to: "/gry/stack-overflow", kind: "stack-overflow" as const, name: "Stack", accent: "Overflow", icon: Layers, tagline: "Zwolnij pamięć. Uniknij awarii.",
     desc: "Układaj bloki danych i czyść pełne wiersze. 2 minuty — nie przepełnij stosu!", rank: "Ranking: punkty" },
+  { to: "/gry/bug-hunt", kind: "bug-hunt" as const, name: "Bug", accent: "Hunt", icon: Bug, tagline: "Namierz błąd. Ocal system.",
+    desc: "Poluj na pojawiające się błędy i oszczędzaj zdrowe symbole. 60 sekund na pokaz refleksu!", rank: "Ranking: punkty" },
 ] as const;
 
 type RankedMemory = ReturnType<typeof loadMemoryScores>;
@@ -39,10 +42,12 @@ function Home() {
   const [memoryScores, setMemoryScores] = useState<RankedMemory>([]);
   const [packetScores, setPacketScores] = useState<PacketEntry[]>([]);
   const [stackScores, setStackScores] = useState<StackEntry[]>([]);
+  const [bugScores, setBugScores] = useState<BugEntry[]>([]);
   const reload = () => {
     setMemoryScores(loadMemoryScores());
     setPacketScores(loadScores());
     setStackScores(loadStackScores());
+    setBugScores(loadBugScores());
   };
   useEffect(() => {
     reload();
@@ -61,7 +66,7 @@ function Home() {
         <h1 className="game-title font-display font-bold leading-none">KNI<span className="text-primary">_</span>Arcade</h1>
         <p className="mt-3 text-xl text-accent sm:text-2xl">Wybierz grę i pobij rekord stoiska</p>
       </div>
-      <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+      <div className="grid gap-6 md:grid-cols-2">
         {GAMES.map((g) => (
           <article key={g.to} className="flex flex-col gap-4 rounded-2xl border bg-card/80 p-6 transition hover:border-primary">
             <g.icon className="h-10 w-10 text-primary" aria-hidden />
@@ -71,7 +76,7 @@ function Home() {
             </div>
             <p className="flex-1 text-muted-foreground">{g.desc}</p>
             <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">{g.rank}</p>
-            {g.kind === "memory-leak" ? <MemoryTop5 rows={memoryScores} /> : <PacketTop5 rows={g.kind === "packet-router" ? packetScores : stackScores} name={g.kind === "packet-router" ? "Packet Router" : "Stack_Overflow"} />}
+            {g.kind === "memory-leak" ? <MemoryTop5 rows={memoryScores} /> : <PacketTop5 rows={g.kind === "packet-router" ? packetScores : g.kind === "stack-overflow" ? stackScores : bugScores} name={g.kind === "packet-router" ? "Packet Router" : g.kind === "stack-overflow" ? "Stack_Overflow" : "Bug_Hunt"} />}
             <Button asChild variant="arcade" size="hero"><Link to={g.to}>Zagraj</Link></Button>
           </article>
         ))}

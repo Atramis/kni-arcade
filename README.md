@@ -2,13 +2,14 @@
 
 Repozytorium GitHub: `kni-dni-otwarte-arcade`.
 
-Trzy gry Koła Naukowego Informatyki w jednej aplikacji:
+Cztery gry Koła Naukowego Informatyki w jednej aplikacji — końcowy zestaw minisalonu:
 
 | Gra | Adres | Ranking |
 | --- | --- | --- |
 | Memory Leak | `/gry/memory-leak` | poziom (malejąco) → błędy (rosnąco) → czas w s (rosnąco) |
 | Packet Router | `/gry/packet-router` | punkty (malejąco), przy remisie wcześniejszy wynik wyżej |
 | Stack_Overflow | `/gry/stack-overflow` | punkty (malejąco), przy remisie wcześniejszy wynik wyżej |
+| Bug_Hunt | `/gry/bug-hunt` | punkty (malejąco), przy remisie wcześniejszy wynik wyżej |
 
 Stos: TanStack Start (React 19, Vite 7, Tailwind CSS 4), serwer Nitro w wersji Node.
 
@@ -16,7 +17,7 @@ Stos: TanStack Start (React 19, Vite 7, Tailwind CSS 4), serwer Nitro w wersji N
 
 - Cała rozgrywka działa bez internetu i bez Lovable Cloud — brak backendu i bazy danych.
 - Wyniki zapisują się w `localStorage` przeglądarki, osobno dla każdej gry
-  (`kni-arcade:memory-leak:scores`, `kni-arcade:packet-router:scores`, `kni-arcade:stack-overflow:scores`).
+  (`kni-arcade:memory-leak:scores`, `kni-arcade:packet-router:scores`, `kni-arcade:stack-overflow:scores`, `kni-arcade:bug-hunt:scores`).
   Klucze zachowują prefiks `kni-arcade:`, żeby istniejące wyniki i hasło
   administratora przetrwały zmianę nazwy projektu. Zostają po odświeżeniu oraz zamknięciu i ponownym otwarciu przeglądarki
   (o ile nie używasz trybu prywatnego i nie czyścisz danych witryn).
@@ -74,17 +75,21 @@ Na stoisku wystarczy po restarcie laptopa ponownie wykonać `npm run start:local
 W stopce ekranu wyboru gier jest przycisk **„Administrator”** z kłódką.
 
 - Przy pierwszym otwarciu ustaw hasło (min. 8 znaków, dwa razy). Zrób to **przed** udostępnieniem laptopa odwiedzającym. Domyślnego hasła nie ma.
-- Po odblokowaniu widać liczbę wyników każdej gry i przyciski resetu (jednej gry lub wszystkich trzech) oraz zmiany hasła. Przed usunięciem można zrobić eksport JSON.
+- Po odblokowaniu widać liczbę wyników każdej gry i przyciski resetu (jednej gry lub wszystkich czterech) oraz zmiany hasła. Przed usunięciem można zrobić eksport JSON.
 - Zamknięcie okna, odświeżenie strony lub przejście do gry ponownie blokuje panel.
 - Reset usuwa tylko wybrany ranking; hasło i rankingi pozostałych gier zostają.
 
 **Uwaga:** to tylko lokalna blokada na stoisko. Hasło jest zapisane w przeglądarce jako weryfikator PBKDF2 (nie jawnym tekstem), ale osoba z dostępem do narzędzi deweloperskich przeglądarki może zmienić lub usunąć dane w localStorage. To nie jest pełne zabezpieczenie danych przed właścicielem urządzenia. Jeśli zapomnisz hasła: w narzędziach deweloperskich usuń klucz `kni-arcade:admin:verifier`.
 
-## Pozostałe polecenia
-
 ### Stack_Overflow
 
 Plansza 10×20, siedem kształtów, podgląd następnego bloku i miejsca lądowania. Runda trwa 120 sekund lub do przepełnienia stosu. Pełne wiersze dają 100/300/500/800 punktów za 1/2/3/4 wiersze jednocześnie; ruch i zrzut nie dają punktów. Co 5 wierszy bloki spadają szybciej. Strzałki lewo/prawo przesuwają, góra obraca, dół przyspiesza, spacja zrzuca. Dostępne są też przyciski ekranowe. Ukrycie karty przerywa rundę bez możliwości zapisu; wyjście usuwa zegary i nasłuchiwanie klawiatury. Gra i jej biblioteka są dołączone lokalnie.
+
+### Bug_Hunt
+
+Siatka 4×4, trzysekundowe odliczanie i 60 sekund polowania. Kliknięcie lub dotknięcie błędu (owad z wykrzyknikiem) daje 100 punktów, a zdrowego symbolu `</>` odejmuje 50, nie poniżej zera. Pominięty błąd nie odejmuje punktów, ale przerywa serię. Co 15 sekund symbole znikają szybciej: po 1400/1200/1000/800 ms; maksymalnie trzy błędy naraz. Wynik zawiera trafienia, pominięcia, pomyłki i najlepszą serię. Ukrycie karty przerywa próbę bez możliwości zapisu; wyjście usuwa zegar i nasłuchiwanie. Osobny ranking przechowuje 200 wyników, pokazuje Top 10 w grze i Top 5 na ekranie wyboru. Dostępne eksport JSON i reset administratora.
+
+## Pozostałe polecenia
 
 - `npm run dev` — tryb deweloperski
 - `npm test` — testy zasad gier i rankingów

@@ -1,4 +1,6 @@
 # KNI_Arcade
+- [x] Add final game Bug_Hunt with pop-up targets, separate offline scores, Top 5 and administrator controls
+- [x] Test Bug_Hunt rules and end-to-end flow, four-game navigation, mobile controls and offline assets (58 tests; full 60-second round, save/refresh/Top 5/export/reset and touch checks; no external requests; laptop package not rebuilt)
 - [x] Add Stack_Overflow with offline leaderboard and administrator integration
 - [x] Verify gameplay, scoring, navigation, mobile controls and offline assets (35 tests; browser flow with external requests blocked; packaged laptop build not rerun)
 - [x] Połączenie gier Memory Leak i Packet Router, strona wyboru, adresy /gry/*

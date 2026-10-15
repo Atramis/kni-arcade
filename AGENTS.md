@@ -12,6 +12,7 @@
 ## Project rules
 - Each game lives in `src/games/<slug>/` (engine, hook, UI, leaderboard) and is mounted by `src/routes/gry/<slug>.tsx`; keeps games isolated and portable.
 - Stack_Overflow wraps a bundled headless falling-block engine behind its own adapter; game timing, scoring and presentation stay isolated from library internals.
+- Bug_Hunt uses a browser-independent, timestamp-driven engine with injectable randomness; scheduled target expiry and scoring remain deterministic and testable independently of rendering.
 - Shared KNI chrome (header, back button, footer) is `src/components/kni/ArcadeShell.tsx`; one place for unified branding.
 - Naming: display name is `KNI_Arcade`; repo and package name are `kni-dni-otwarte-arcade`. localStorage keys keep the `kni-arcade:` prefix so saved scores and the admin password survive renames.
 - Scores are stored only in localStorage via `src/lib/local-scores.ts`, one key per game; the app must run fully offline at a booth.
