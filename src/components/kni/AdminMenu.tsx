@@ -14,8 +14,8 @@ import {
 } from "@/lib/admin-auth";
 
 type View = "setup" | "login" | "panel" | "change";
-const NAMES: Record<GameKey, string> = { memoryLeak: "Memory Leak", packetRouter: "Packet Router" };
-const SLUGS: Record<GameKey, string> = { memoryLeak: "memory-leak", packetRouter: "packet-router" };
+const NAMES: Record<GameKey, string> = { memoryLeak: "Memory Leak", packetRouter: "Packet Router", stackOverflow: "Stack_Overflow" };
+const SLUGS: Record<GameKey, string> = { memoryLeak: "memory-leak", packetRouter: "packet-router", stackOverflow: "stack-overflow" };
 
 export function AdminMenu({ onChanged }: { onChanged: () => void }) {
   const [open, setOpen] = useState(false);
@@ -23,13 +23,14 @@ export function AdminMenu({ onChanged }: { onChanged: () => void }) {
   const [error, setError] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
-  const [counts, setCounts] = useState<Record<GameKey, number>>({ memoryLeak: 0, packetRouter: 0 });
+  const [counts, setCounts] = useState<Record<GameKey, number>>({ memoryLeak: 0, packetRouter: 0, stackOverflow: 0 });
   const [confirm, setConfirm] = useState<GameKey[] | null>(null);
 
   const refreshCounts = () =>
     setCounts({
       memoryLeak: readList(STORAGE_KEYS.memoryLeak).length,
       packetRouter: readList(STORAGE_KEYS.packetRouter).length,
+      stackOverflow: readList(STORAGE_KEYS.stackOverflow).length,
     });
 
   useEffect(() => {
@@ -155,7 +156,8 @@ export function AdminMenu({ onChanged }: { onChanged: () => void }) {
               </ul>
               <Button variant="outline" onClick={() => setConfirm(["memoryLeak"])} disabled={busy}>Resetuj ranking Memory Leak</Button>
               <Button variant="outline" onClick={() => setConfirm(["packetRouter"])} disabled={busy}>Resetuj ranking Packet Router</Button>
-              <Button variant="outline" onClick={() => setConfirm(["memoryLeak", "packetRouter"])} disabled={busy}>Resetuj oba rankingi</Button>
+              <Button variant="outline" onClick={() => setConfirm(["stackOverflow"])} disabled={busy}>Resetuj ranking Stack_Overflow</Button>
+              <Button variant="outline" onClick={() => setConfirm(["memoryLeak", "packetRouter", "stackOverflow"])} disabled={busy}>Resetuj wszystkie rankingi</Button>
               <Button variant="ghost" onClick={() => { setView("change"); setNotice(null); setError(null); }}>Zmień hasło</Button>
               <Button variant="arcade" onClick={close}><Lock /> Zablokuj i zamknij</Button>
             </div>
