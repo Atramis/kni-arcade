@@ -3,6 +3,7 @@ export const STORAGE_KEYS = {
   memoryLeak: "kni-arcade:memory-leak:scores",
   packetRouter: "kni-arcade:packet-router:scores",
   stackOverflow: "kni-arcade:stack-overflow:scores",
+  bugHunt: "kni-arcade:bug-hunt:scores",
 } as const;
 
 export function readList<T>(key: string): T[] {
