@@ -32,7 +32,7 @@ it("individual and all-game reset preserve the password and unrelated settings",
   expect(localStorage.getItem(STORAGE_KEYS.memoryLeak)).toBe("[1]");
   expect(localStorage.getItem(STORAGE_KEYS.packetRouter)).toBe("[1]");
   localStorage.setItem(STORAGE_KEYS.stackOverflow, "[2]");
-  resetRankings(["memoryLeak", "packetRouter", "stackOverflow"]);
+  resetRankings(["memoryLeak", "packetRouter", "stackOverflow", "bugHunt"]);
   Object.values(STORAGE_KEYS).forEach((key) => expect(localStorage.getItem(key)).toBeNull());
   expect(localStorage.getItem(ADMIN_KEY)).toBe("verifier"); expect(localStorage.getItem("settings")).toBe("keep");
 });
