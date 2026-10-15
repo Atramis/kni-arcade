@@ -1,6 +1,6 @@
 # KNI_Arcade
-- [ ] Add Stack_Overflow with offline leaderboard and administrator integration
-- [ ] Verify gameplay, scoring, navigation, mobile controls and offline assets
+- [x] Add Stack_Overflow with offline leaderboard and administrator integration
+- [x] Verify gameplay, scoring, navigation, mobile controls and offline assets (35 tests; browser flow with external requests blocked; packaged laptop build not rerun)
 - [x] Połączenie gier Memory Leak i Packet Router, strona wyboru, adresy /gry/*
 - [x] Osobne lokalne rankingi
 - [x] Oznaczenie „Ranking tego laptopa” + eksport wyników do JSON
